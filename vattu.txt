@@ -1,0 +1,120 @@
+Ti vi
+VT16
+Cai
+20
+Tu lanh
+VT08
+Cai
+35
+May giat
+VT24
+Cai
+100
+May dieu hoa
+VT04
+Cai
+56
+May loc nuoc
+VT12
+Cai
+87
+Bep gas
+VT20
+Cai
+103
+Choi quet nha
+VT28
+Cai
+37
+Cay lau san
+VT02
+Cai
+256
+Quat
+VT06
+Cai
+25
+Noi com dien
+VT10
+Cai
+674
+Giay
+VT14
+Doi
+28
+Dep
+VT18
+Doi
+138
+Binh nuoc loc 15lit
+VT22
+Binh
+158
+Nuoc khoang
+VT26
+Chai
+268
+Coca-Cola
+VT30
+Lon
+454
+Nuoc giat
+VT01
+Can
+456
+Sting
+VT03
+Chai
+999
+Sua vinamilk
+VT05
+Vi
+244
+Dau goi dau
+VT07
+Chai
+90
+Sua tam
+VT09
+Chai
+88
+Bia Tiger
+VT11
+Lon
+999
+Con muc
+VT13
+Con
+33
+Bia 333
+VT15
+Lon
+69
+Bia Hanoi
+VT17
+Lon
+60
+Bia Sai Gon
+VT19
+Lon
+77
+Dao cao rau
+VT21
+Hop
+56
+Sua rua mat
+VT23
+Hop
+10
+May cay
+VT25
+Chiec
+398
+Son
+VT27
+Thoi
+0
+Quat May 
+VT99
+Cai
+10
