@@ -1199,34 +1199,62 @@ class StaffTab: public Tab{
 			}	
 		}
 		void ReadData(){
-			// ifstream data;
-			// data.open("nhanvien.txt", ios::in);
-			// Employee a;
-			// string temp;
-			// while(1){
-			// 	getline(data, a.HO);
-			// 	if(a.HO == ""){
-			// 		break;
-			// 	}
-			// 	getline(data, a.TEN);
-			// 	getline(data, a.id);
-			// 	data >> a.PHAI;
-			// 	getline(data, temp);
-			// 	dsNhanVien.Insert_Staff(a);
-			// 	pageNumber= dsNhanVien.sl/25 + 1;
-			// }
-			// data.close();
+			ifstream data;
+			data.open("nhanvien.txt", ios::in);
+			
+			string temp;// bien tam
+			int sonv;// so luong nhan vien
+			string mavt;
+			float sl;
+			float dongia; 
+			float vat;
+			int socthd;
+			string sohoadon;
+			char loai;
+			int ngay;
+			int thang;
+			int nam;
+			data >> sonv;
+			getline(data, temp);
+			
+			while(sonv){
+				Employee a; //bien nhan vien tam thoi
+				getline(data, a.HO);
+				if(a.HO == ""){
+					break;
+				}
+				data >> a.TEN;
+				data >> a.id;
+				data >> a.PHAI;
+//				getline(data, temp);
+				dsNhanVien.Insert_Staff(a);
+				pageNumber= dsNhanVien.sl/25 + 1;
+				int sohd;
+				data >> sohd;
+				DBList cthd;
+				while(sohd--){
+					data >> sohoadon;
+					if(sohoadon == ""){
+						break;
+					}
+					data >> loai; 
+					data >> ngay;
+					data >> thang;
+					data >> nam;
+					data >> socthd;			 
+					for(int j = 0; j < socthd; j++){
+						data.ignore();
+						data >> mavt >> sl >> dongia >> vat;
+						cthd.Insert_Last_DBList(mavt,sl,dongia,vat);
+					}
+					dsNhanVien.nhanVien[dsNhanVien.sl-1]->HoaDon->Insert_HD(sohoadon, ngay, thang, nam, loai, &cthd);
+				}
+				sonv--;
+				data.ignore();//////sua tam thoi
+			}
+			data.close();
 		}
 		void WriteData(){
-			// ofstream data;
-			// data.open("nhanvien.txt", ios::out| ios::trunc);
-			// for(int i = 0; i< dsNhanVien.sl; i++){
-			// 	data<< dsNhanVien.nhanVien[i]->HO << endl;
-			// 	data << dsNhanVien.nhanVien[i]->TEN << endl;
-			// 	data<< dsNhanVien.nhanVien[i]->id << endl;
-			// 	data << dsNhanVien.nhanVien[i]->PHAI << endl;
-			// }
-			// data.close();
 		}
 		Employee* Search_NV_ToAddBill(string id){
 			for(int i = 0; i < dsNhanVien.sl; i++){
@@ -1308,7 +1336,6 @@ class BillTab: public Tab{
 		{
 			nodeNeedEdit = currentNodeCTHD;
 			state = EDIT;
-			//ResetCTHD();
 		}
 		void checkVatTuCoTrongCTHD(){
 			for(int i = 0; i < nhanvien->dsNhanVien.sl; i++){
@@ -1361,7 +1388,6 @@ class BillTab: public Tab{
 				total = total + last->data.Dongia* last->data.Soluong*(100 + last->data.VAT)/100;
 				ResetCTHD();
 			}
-
 		}
 		void ThanhToanHoaDon(){
 			if(dscthd->First == NULL){
@@ -1429,14 +1455,11 @@ class BillTab: public Tab{
 			int lePhai = 1720;
 			int leTren = 110;
 			int height = 32;
-			Button<BillTab> select(1640,y + 15, textwidth("xem"), textheight("xem"), WHITE, addbutton_oncolor, "xem", &BillTab::Watch, BLACK);
-			
+			Button<BillTab> select(1640,y + 15, textwidth("xem"), textheight("xem"), WHITE, addbutton_oncolor, "xem", &BillTab::Watch, BLACK);			
 			setcolor(BLACK);
 			setbkcolor(smallwindow_bg_color);
 			outtextxy(x1, y, (char*)toString(++stt).c_str());
 			outtextxy(x2, y, (char*)toString(a->data.soHD).c_str());
-			//Employee* temp = nhanvien->dsNhanVien.Search_MaNV(nhanvien->dsNhanVien, )
-			//outtextxy(x3, y, (char*)toString(a->data.).c_str());// ten nhan vien
 			outtextxy(x4, y, (char*)toString(a->data.loai).c_str());
 			outtextxy(x5, y, (char*)(toString(a->data.date.day)+"/"+toString(a->data.date.month)+"/"+toString(a->data.date.year)).c_str());//ngay lap
 			select.Action(this);
@@ -1451,8 +1474,7 @@ class BillTab: public Tab{
 			outtextxy(x3, y, (char*)toString(temp->data.DVTinh).c_str());
 			outtextxy(x4, y, (char*)toString(p->data.Soluong).c_str());
 			outtextxy(x5, y, (char*)toString((long long)p->data.Dongia).c_str());
-			outtextxy(x6, y, (char*)toString(p->data.VAT).c_str());
-			
+			outtextxy(x6, y, (char*)toString(p->data.VAT).c_str());			
 			outtextxy(1660 - textwidth((char*)toString((long long)(p->data.Soluong * p->data.Dongia * (100 + p->data.VAT)/100)).c_str()), y, (char*)toString((long long)(p->data.Soluong * p->data.Dongia * (100 + p->data.VAT)/100)).c_str());
 			outtextxy(1680, y, "dong");
 			Button<BillTab> cancelCTHD = Button<BillTab>(x7, y+5, textwidth("X"), textheight("X"), RED, RED, "X", &BillTab::xoaChiTietHoaDon, WHITE);
@@ -1516,8 +1538,7 @@ class BillTab: public Tab{
 			close.Action(this);
 		}
 		void SaveChange()
-		{
-			
+		{			
 			if(contentedit[0].CheckString()&&contentedit[1].CheckString()&&contentedit[2].CheckString()&&contentedit[3].CheckString())
 			{
 				// if(MessageBox(NULL,"Du Lieu Vua Thay Doi Ban Co Muon Luu Khong ?","THONG BAO",MB_ICONWARNING|MB_OKCANCEL) == IDOK)
@@ -1701,11 +1722,9 @@ class BillTab: public Tab{
 			contentedit[0] = InputField(screenWidth/2-150, 250, 10, 30, fieldborder_basic_color, fieldborder_on_color, "Ma vat tu: ", m_code);
 			contentedit[1] = InputField(screenWidth/2-150 , 340, 10, 30, fieldborder_basic_color, fieldborder_on_color, "So luong: ", m_quantity);
 			contentedit[2] = InputField(screenWidth/2 - 150, 430, 10, 30, fieldborder_basic_color, fieldborder_on_color, "Don gia: ", m_price);
-			contentedit[3] = InputField(screenWidth/2 + 120, 430, 3, 30, fieldborder_basic_color, fieldborder_on_color, "VAT: ", VAT);
-			
+			contentedit[3] = InputField(screenWidth/2 + 120, 430, 3, 30, fieldborder_basic_color, fieldborder_on_color, "VAT: ", VAT);			
 			close=Button<BillTab>(screenWidth/2 + 460,200,30,30,close_basic_color,close_basic_color,"X",&BillTab::Close);
 			savechange =Button<BillTab>(screenWidth/2,500,680,40,tab_on_color,tab_basic_color,"Luu thong tin",&BillTab::SaveChange);
-
 			previousPageCTHD = Button<BillTab>(60, 980, textwidth("<<"), textheight("<<"), LIGHTGRAY, BLUE, "<<", &BillTab::PreviousPageCTHD, WHITE);
 			nextPageCTHD = Button<BillTab>(220, 980, textwidth(">>"), textheight(">>"), LIGHTGRAY, BLUE, ">>", &BillTab::NextPageCTHD, WHITE);
 			selectNV = Button<BillTab>(690, 125, textwidth("Chon nhan vien"), textheight("Chon nhan vien"), GREEN, 11, "Chon nhan vien", &BillTab::chonNhanVien, BLACK);
@@ -1793,8 +1812,6 @@ class BillTab: public Tab{
 						EditDirect();
 					}
 					break;
-				
-		
 			}			
 			// nhap du lieu
 			int c=GetInput();
@@ -1802,17 +1819,14 @@ class BillTab: public Tab{
 			if(fieldPointer!=NULL) {
 				if(c==-1) fieldPointer->DeleteChar();
 				else if(c==1||c==2){
-					if(state==ADD){
-						
+					if(state==ADD){					
 						if(c==1) --index;
 						else ++index;
 						index=max(0,index);
 						index=min(index,10);
 						fieldPointer=&info[index];
-					}
-					
+					}			
 				}
-
 				else if(c!=0)
 				{
 					if(index ==0)
@@ -1903,7 +1917,6 @@ class BillTab: public Tab{
 				fileOut << nhanvien->dsNhanVien.nhanVien[i]->TEN << endl;
 				fileOut << nhanvien->dsNhanVien.nhanVien[i]->id << endl;
 				fileOut << nhanvien->dsNhanVien.nhanVien[i]->PHAI << endl;
-				// string fileName = nhanvien->dsNhanVien.nhanVien[i]->id + ".txt";
 				BillNode* tmp = nhanvien->dsNhanVien.nhanVien[i]->HoaDon->First;
 				fileOut << nhanvien->dsNhanVien.nhanVien[i]->HoaDon->sl << endl;
 				while(tmp!=NULL){
@@ -1943,10 +1956,7 @@ class BillTab: public Tab{
 			int ngay;
 			int thang;
 			int nam;
-			// fileIn.ignore();
-			// getline(fileIn, temp);
 			for(int i = 0; i < sonhanvien; i++){
-				// string fileName = nhanvien->dsNhanVien.nhanVien[i]->id + ".txt";			
 				getline(fileIn, a.HO);
 				if(a.HO == ""){
 					break;
@@ -1954,15 +1964,9 @@ class BillTab: public Tab{
 				getline(fileIn, a.TEN);
 				getline(fileIn, a.id);
 				fileIn >> a.PHAI;
-				// getline(fileIn, temp);
-				fileIn.ignore();
-				
+				fileIn.ignore();				
 				nhanvien->dsNhanVien.Insert_Staff(a);
 				pageNumber= nhanvien->dsNhanVien.sl/25 + 1;
-
-
-
-				
 				DBList cthd;
 				while(1){
 					getline(fileIn, sohoadon);
@@ -1977,7 +1981,6 @@ class BillTab: public Tab{
 					for(int j = 0; j < num; j++){
 						fileIn.ignore();
 						fileIn >> mavt >> sl >> dongia >> vat;
-						//fileIn.ignore();
 						cthd.Insert_Last_DBList(mavt,sl,dongia,vat);
 					}
 					nhanvien->dsNhanVien.nhanVien[i]->HoaDon->Insert_HD(sohoadon, ngay, thang, nam, loai, &cthd);

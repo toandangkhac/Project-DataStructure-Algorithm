@@ -9,7 +9,7 @@ Cai
 May giat
 VT24
 Cai
-100
+101
 May dieu hoa
 VT04
 Cai
@@ -21,11 +21,11 @@ Cai
 Bep gas
 VT20
 Cai
-103
+105
 Choi quet nha
 VT28
 Cai
-37
+42
 Cay lau san
 VT02
 Cai
@@ -41,7 +41,7 @@ Cai
 Giay
 VT14
 Doi
-28
+30
 Dep
 VT18
 Doi
@@ -49,7 +49,7 @@ Doi
 Binh nuoc loc 15lit
 VT22
 Binh
-158
+171
 Nuoc khoang
 VT26
 Chai
@@ -57,7 +57,7 @@ Chai
 Coca-Cola
 VT30
 Lon
-454
+456
 Nuoc giat
 VT01
 Can
@@ -89,7 +89,7 @@ Con
 Bia 333
 VT15
 Lon
-69
+88
 Bia Hanoi
 VT17
 Lon
